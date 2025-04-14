@@ -1,0 +1,77 @@
+$breakpoints: (
+        xs: 0px,
+        sm: 768px,
+        md: 992px,
+        lg: 1200px
+);
+
+$scales: (
+        xs: 0.5,
+        sm: 0.75,
+        md: 0.85,
+        lg: 1
+);
+
+$spacing-values: ();
+
+@for $i from 1 through 200 {
+  $value: $i * 0.5;
+  $size-name: if($i % 2 == 0, #{$i / 2}, #{($i - 1) / 2}-5);
+  $spacing-values: map-merge($spacing-values, (#{$size-name}: #{$value}rem));
+}
+
+@mixin generate-spacing($type, $allow-negative: false) {
+  @each $size, $value in $spacing-values {
+    $property: if($type == "m", margin, padding);
+
+    .concrete-#{$type}-#{$size} {
+      #{$property}: $value;
+    }
+
+    .concrete-#{$type}t-#{$size} { #{$property}-top: $value; }
+    .concrete-#{$type}b-#{$size} { #{$property}-bottom: $value; }
+    .concrete-#{$type}l-#{$size} { #{$property}-left: $value; }
+    .concrete-#{$type}r-#{$size} { #{$property}-right: $value; }
+
+    .concrete-#{$type}x-#{$size} {
+      #{$property}-left: $value;
+      #{$property}-right: $value;
+    }
+
+    .concrete-#{$type}y-#{$size} {
+      #{$property}-top: $value;
+      #{$property}-bottom: $value;
+    }
+
+    @if $allow-negative {
+      .concrete-#{$type}n-#{$size} { #{$property}: -$value; }
+      .concrete-#{$type}nt-#{$size} { #{$property}-top: -$value; }
+      .concrete-#{$type}nb-#{$size} { #{$property}-bottom: -$value; }
+      .concrete-#{$type}nl-#{$size} { #{$property}-left: -$value; }
+      .concrete-#{$type}nr-#{$size} { #{$property}-right: -$value; }
+    }
+
+    @each $bp, $width in $breakpoints {
+      @media (min-width: $width) {
+        .concrete-#{$type}-#{$size} {
+          #{$property}: calc(#{$value} * map-get($scales, $bp));
+        }
+        .concrete-#{$type}t-#{$size} { #{$property}-top: calc(#{$value} * map-get($scales, $bp)); }
+        .concrete-#{$type}b-#{$size} { #{$property}-bottom: calc(#{$value} * map-get($scales, $bp)); }
+        .concrete-#{$type}l-#{$size} { #{$property}-left: calc(#{$value} * map-get($scales, $bp)); }
+        .concrete-#{$type}r-#{$size} { #{$property}-right: calc(#{$value} * map-get($scales, $bp)); }
+
+        @if $allow-negative {
+          .concrete-#{$type}n-#{$size} { #{$property}: calc(-#{$value} * map-get($scales, $bp)); }
+          .concrete-#{$type}nt-#{$size} { #{$property}-top: calc(-#{$value} * map-get($scales, $bp)); }
+          .concrete-#{$type}nb-#{$size} { #{$property}-bottom: calc(-#{$value} * map-get($scales, $bp)); }
+          .concrete-#{$type}nl-#{$size} { #{$property}-left: calc(-#{$value} * map-get($scales, $bp)); }
+          .concrete-#{$type}nr-#{$size} { #{$property}-right: calc(-#{$value} * map-get($scales, $bp)); }
+        }
+      }
+    }
+  }
+}
+
+@include generate-spacing("m", true);
+@include generate-spacing("p", false);

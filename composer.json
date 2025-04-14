@@ -1,0 +1,5 @@
+{
+  "name": "bitter/responsive_spacings",
+  "type": "concrete5-package",
+  "description": "Add responsive CSS spacing classes (margin & padding) to any block, container, or area in Concrete CMS."
+}
