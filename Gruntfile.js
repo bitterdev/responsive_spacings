@@ -30,6 +30,7 @@ module.exports = function (grunt) {
             main: {
                 files: [
                     {src: ['css/**'], dest: "dist/"},
+                    {src: ['elements/**'], dest: "dist/"},
                     {src: ['controller.php'], dest: "dist/", filter: 'isFile'},
                     {src: ['icon.png'], dest: "dist/", filter: 'isFile'},
                     {src: ['INSTALL.TXT'], dest: "dist/", filter: 'isFile'},

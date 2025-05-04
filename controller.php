@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Controller extends Package
 {
     protected string $pkgHandle = 'responsive_spacings';
-    protected string $pkgVersion = '0.0.1';
+    protected string $pkgVersion = '0.0.2';
     protected $appVersionRequired = '9.0.0';
 
     public function getPackageDescription(): string
